@@ -217,9 +217,8 @@
       color: var(--moon);
       margin-bottom: 1.5rem;
       padding-left: 2rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.2s;
+      animation: fadeUp 0.8s ease both;
+      animation-delay: 0.1s;
     }
 
     .hero-name {
@@ -230,9 +229,8 @@
       padding-left: 2rem;
       margin-bottom: 0.5rem;
       color: var(--moonlight);
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.4s;
+      animation: fadeUp 0.8s ease both;
+      animation-delay: 0.2s;
     }
 
     .hero-name em {
@@ -247,8 +245,9 @@
       color: var(--moon);
       padding-left: 2rem;
       margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
+      animation: fadeUp 0.8s ease both;
+      animation-delay: 0.3s;
+    }
       animation-delay: 0.6s;
     }
 
@@ -258,9 +257,8 @@
       font-size: 0.95rem;
       color: var(--moonlight-dim);
       line-height: 1.8;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.8s;
+      animation: fadeUp 0.8s ease both;
+      animation-delay: 0.4s;
     }
 
     .hero-cta {
@@ -268,9 +266,8 @@
       padding-left: 2rem;
       display: flex;
       gap: 1rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 1s;
+      animation: fadeUp 0.8s ease both;
+      animation-delay: 0.5s;
     }
 
     /* Button styles */
@@ -1112,20 +1109,19 @@
     // Create an observer that watches for elements entering the screen
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        // If the element is now visible...
         if (entry.isIntersecting) {
-          // ...add the "visible" class (triggers the CSS animation)
           entry.target.classList.add('visible');
-          // Stop watching this element — no need to keep observing once it's shown
           observer.unobserve(entry.target);
         }
       });
     }, {
-      threshold: 0.1  // trigger when 10% of the element is visible
+      threshold: 0.05  // trigger when just 5% is visible — more reliable locally
     });
 
-    // Tell the observer to watch each reveal element
-    reveals.forEach(el => observer.observe(el));
+    // Small delay so the page is fully painted before we start observing
+    setTimeout(() => {
+      reveals.forEach(el => observer.observe(el));
+    }, 100);
 
     /*
       ACTIVE NAV LINK
