@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karlita Karolina — For people who were told to pick one thing.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --night: #080d1a;
+      --night-soft: #0d1428;
+      --night-card: #111a30;
+      --moon: #e2b96f;
+      --moon-dim: rgba(226,185,111,0.18);
+      --star: #8ba7d4;
+      --moonlight: #f0ead8;
+      --moonlight-dim: #9ba8bc;
+      --serif: 'Cormorant Garamond', serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--night);
+      color: var(--moonlight);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(240,234,216,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 40%, rgba(139,167,212,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 10%, rgba(240,234,216,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 60%, rgba(226,185,111,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 25%, rgba(240,234,216,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 70%, rgba(139,167,212,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 12%, rgba(139,167,212,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 80%, rgba(226,185,111,0.25) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 45% 35%, rgba(226,185,111,0.35) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 75% 55%, rgba(240,234,216,0.4) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(8,13,26,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 0.5px solid var(--moon-dim);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--moonlight);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--moonlight-dim);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--moon); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      left: 4rem; top: 12rem; bottom: 4rem;
+      width: 0.5px;
+      background: var(--moon-dim);
+    }
+
+    .hero-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--moon);
+      margin-bottom: 1.5rem;
+      padding-left: 2rem;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      padding-left: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--moonlight);
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--star);
+    }
+
+    .hero-sub {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-style: italic;
+      color: var(--moon);
+      padding-left: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc {
+      max-width: 480px;
+      padding-left: 2rem;
+      font-size: 0.95rem;
+      color: var(--moonlight-dim);
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      margin-top: 2.5rem;
+      padding-left: 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .btn-primary {
+      background: var(--moon);
+      color: var(--night);
+      border: 1px solid var(--moon);
+    }
+
+    .btn-primary:hover { background: var(--moonlight); border-color: var(--moonlight); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--moonlight);
+      border: 0.5px solid rgba(240,234,216,0.3);
+    }
+
+    .btn-outline:hover { border-color: var(--star); color: var(--star); }
+
+    /* SECTIONS */
+    section { padding: 6rem 4rem; position: relative; z-index: 1; }
+    section.alt { background: var(--night-soft); }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--moon);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 40px;
+      height: 0.5px;
+      background: var(--moon);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 3rem;
+      max-width: 600px;
+      color: var(--moonlight);
+    }
+
+    .section-title em { font-style: italic; color: var(--star); }
+
+    /* ABOUT — updated layout */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 0.95rem;
+      color: var(--moonlight-dim);
+      margin-bottom: 1.25rem;
+      line-height: 1.9;
+    }
+
+    .about-text strong { color: var(--moonlight); font-weight: 500; }
+
+    /* Blockquote style for the core belief */
+    .about-belief {
+      margin: 2rem 0;
+      padding: 1.5rem 1.75rem;
+      border-left: 2px solid var(--moon);
+      background: var(--night-card);
+    }
+
+    .about-belief p {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--moonlight);
+      line-height: 1.6;
+      margin-bottom: 0 !important;
+    }
+
+    .about-pillars { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .pillar {
+      padding: 1.5rem;
+      border: 0.5px solid rgba(226,185,111,0.2);
+      border-left: 2px solid var(--moon);
+      background: var(--night-card);
+      transition: transform 0.3s ease;
+    }
+
+    .pillar:hover { transform: translateX(6px); }
+
+    .pillar-title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 0.4rem;
+      color: var(--moonlight);
+    }
+
+    .pillar-desc { font-size: 0.82rem; color: var(--moonlight-dim); line-height: 1.6; }
+
+    /* WHAT I DO */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .service-card {
+      padding: 2rem;
+      border: 0.5px solid rgba(139,167,212,0.15);
+      background: var(--night-card);
+      position: relative;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 32px; height: 2px;
+      background: var(--moon);
+      transition: width 0.4s ease;
+    }
+
+    .service-card:hover::before { width: 100%; }
+    .service-card:hover { border-color: rgba(226,185,111,0.25); }
+
+    .service-num {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      color: rgba(139,167,212,0.2);
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .service-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      color: var(--moonlight);
+    }
+
+    .service-desc { font-size: 0.85rem; color: var(--moonlight-dim); line-height: 1.75; }
+
+    /* NEW: Clarity session card */
+    .clarity-card {
+      margin-top: 3rem;
+      padding: 2.5rem;
+      border: 0.5px solid rgba(226,185,111,0.3);
+      background: var(--night-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .clarity-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--moon), var(--star));
+    }
+
+    .clarity-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--moon);
+      margin-bottom: 1rem;
+    }
+
+    .clarity-title {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--moonlight);
+      margin-bottom: 0.75rem;
+    }
+
+    .clarity-title em { font-style: italic; color: var(--star); }
+
+    .clarity-desc {
+      font-size: 0.88rem;
+      color: var(--moonlight-dim);
+      line-height: 1.8;
+      max-width: 520px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* EXPERIENCE — narrative style */
+    .experience-section { background: var(--night-soft); padding: 6rem 4rem; }
+
+    .life-narrative {
+      max-width: 660px;
+    }
+
+    .life-narrative p {
+      font-size: 0.95rem;
+      color: var(--moonlight-dim);
+      line-height: 1.95;
+      margin-bottom: 1.4rem;
+    }
+
+    .life-narrative strong { color: var(--moonlight); font-weight: 500; }
+
+    /* TEQUILA */
+    .tequila-section { background: var(--night); padding: 6rem 4rem; position: relative; }
+
+    .tequila-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 4rem; right: 4rem;
+      height: 0.5px;
+      background: linear-gradient(90deg, transparent, var(--moon), transparent);
+    }
+
+    .tequila-intro { max-width: 560px; margin-bottom: 3.5rem; }
+    .tequila-intro p { font-size: 0.9rem; color: var(--moonlight-dim); line-height: 1.85; }
+    .tequila-intro strong { color: var(--moonlight); font-weight: 500; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--night-card);
+      border: 0.5px solid rgba(139,167,212,0.12);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--moon);
+      transition: width 0.5s ease;
+    }
+
+    .project-card:hover::before { width: 100%; }
+    .project-card:hover { border-color: rgba(226,185,111,0.2); }
+
+    .project-year {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--moon);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-name {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--moonlight);
+      margin-bottom: 0.5rem;
+      line-height: 1.15;
+    }
+
+    .project-name em { font-style: italic; font-weight: 300; color: var(--star); }
+    .project-desc { font-size: 0.82rem; color: var(--moonlight-dim); line-height: 1.7; margin-bottom: 1.25rem; }
+
+    .project-roles { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .role-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border: 0.5px solid rgba(226,185,111,0.3);
+      color: var(--moon);
+      border-radius: 20px;
+    }
+
+    /* MISSION */
+    .mission {
+      text-align: center;
+      padding: 7rem 4rem;
+      background: var(--night-card);
+      position: relative;
+      overflow: hidden;
+      border-top: 0.5px solid var(--moon-dim);
+      border-bottom: 0.5px solid var(--moon-dim);
+    }
+
+    .mission::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 0.5px solid rgba(226,185,111,0.08);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+    }
+
+    .mission::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 0.5px solid rgba(139,167,212,0.06);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+    }
+
+    .mission-quote {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-style: italic;
+      font-weight: 300;
+      max-width: 700px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.4;
+      position: relative;
+      color: var(--moonlight);
+      z-index: 1;
+    }
+
+    .mission-attr {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--moon);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* CONNECT */
+    .connect-inner { max-width: 560px; }
+    .connect-links { display: flex; flex-direction: column; gap: 1px; margin-top: 2.5rem; }
+
+    .connect-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0;
+      border-bottom: 0.5px solid rgba(226,185,111,0.15);
+      text-decoration: none;
+      color: var(--moonlight);
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .connect-item:hover { color: var(--moon); padding-left: 8px; }
+    .connect-item-label { letter-spacing: 0.06em; }
+    .connect-arrow { font-size: 1.1rem; color: rgba(226,185,111,0.3); }
+    .connect-item:hover .connect-arrow { color: var(--moon); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 0.5px solid rgba(226,185,111,0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--moonlight-dim);
+      background: var(--night);
+    }
+
+    .js-ready .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .js-ready .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .js-ready .reveal-delay-1 { transition-delay: 0.1s; }
+    .js-ready .reveal-delay-2 { transition-delay: 0.2s; }
+    .js-ready .reveal-delay-3 { transition-delay: 0.3s; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      .hero::before { left: 1.5rem; }
+      .hero-tag, .hero-name, .hero-sub, .hero-desc, .hero-cta { padding-left: 1rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .experience-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="#home" class="nav-logo">Karlita Karolina</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#what-i-do">What I Do</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#tequila">TEQUILA</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" id="home">
+    <p class="hero-tag">Portfolio · @nengalitrolina</p>
+    <h1 class="hero-name">
+      Karlita<br>
+      <em>Karolina.</em>
+    </h1>
+    <p class="hero-sub">For people who were told to pick one thing.</p>
+    <p class="hero-desc">
+      I help you find the thread that connects all of them.
+      Language. Movement. Story. Transformation.
+      I don't pick one thing — I live at the intersection of all of them.
+    </p>
+    <div class="hero-cta">
+      <a href="#what-i-do" class="btn btn-primary">See What I Do</a>
+      <a href="#connect" class="btn btn-outline">Let's Connect</a>
+    </div>
+  </section>
+
+  <section class="alt" id="about">
+    <p class="section-label reveal">About</p>
+    <h2 class="section-title reveal">
+      I've never been<br>
+      <em>just one thing.</em>
+    </h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          Linguist. Dancer. Creator. Director. Writer.
+          The list exists — but it was never the point.
+        </p>
+        <p>
+          The point is the thread underneath all of it: <strong>how people become more fully themselves.</strong>
+          How language shapes the way we see who we are. How movement says what words can't.
+          How a story, told honestly, can crack something open in someone who didn't know they needed it.
+        </p>
+        <p>
+          I studied Critical Discourse Analysis — which is a formal way of saying I was trained
+          to read what's between the lines. I direct dance productions with <strong>TEQUILA</strong>,
+          where every performance is built from concept to final frame. I create content rooted
+          in growth, honesty, and the quiet courage it takes to stop shrinking.
+        </p>
+        <p>
+          I work with people who were told to pick one thing —
+          <strong>and never quite believed they should have to.</strong>
+        </p>
+
+        <div class="about-belief reveal">
+          <p>"You don't have to earn the right to exist fully. You already do. Simply, merely, completely."</p>
+        </div>
+
+        <p style="margin-top:1.25rem; font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--moon);">
+          Just go with it.
+        </p>
+      </div>
+
+      <div class="about-pillars">
+        <div class="pillar reveal reveal-delay-1">
+          <p class="pillar-title">Linguist & Researcher</p>
+          <p class="pillar-desc">Critical Discourse Analysis. Thesis on consumerism in digital media. Trained to read what's between the lines — in language, in people, in stories.</p>
+        </div>
+        <div class="pillar reveal reveal-delay-2">
+          <p class="pillar-title">Content Creator</p>
+          <p class="pillar-desc">Running @nengalitrolina across Instagram, TikTok, and YouTube. Building a space for people who are complex, growing, and done apologizing for it.</p>
+        </div>
+        <div class="pillar reveal reveal-delay-3">
+          <p class="pillar-title">Dancer & Performer</p>
+          <p class="pillar-desc">Movement as a language. Choreography as storytelling. Dance is where I process what words can't fully hold — and TEQUILA is where that becomes something others can witness.</p>
+        </div>
+        <div class="pillar reveal">
+          <p class="pillar-title">Voice Architect</p>
+          <p class="pillar-desc">I help people who feel scattered, stuck, or too-much-for-one-box find the thread that connects all of them — and start moving from it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="what-i-do">
+    <p class="section-label reveal">What I offer</p>
+    <h2 class="section-title reveal">
+      Here's where I can<br>
+      <em>show up for you.</em>
+    </h2>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <p class="service-num">01</p>
+        <h3 class="service-title">Content & Storytelling</h3>
+        <p class="service-desc">Carousels, captions, scripts, and narratives that don't just inform — they resonate. Bilingual (EN/ID), always rooted in meaning.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <p class="service-num">02</p>
+        <h3 class="service-title">Language & Discourse</h3>
+        <p class="service-desc">Critical analysis, academic writing, editorial work — a sharp eye for how language is used and what it quietly reveals about power, identity, and self.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <p class="service-num">03</p>
+        <h3 class="service-title">Teaching & Tutoring</h3>
+        <p class="service-desc">Formal academic tutoring in English and linguistics. I teach the way I wish I was taught — with context, curiosity, and genuine care for the learner.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <p class="service-num">04</p>
+        <h3 class="service-title">Production & Direction</h3>
+        <p class="service-desc">Choreography, audio mixing, creative direction — from the first concept to the final performance. Built with TEQUILA.</p>
+      </div>
+    </div>
+
+    <div class="clarity-card reveal" style="margin-top:3rem;">
+      <p class="clarity-tag">Now open · Free session</p>
+      <h3 class="clarity-title">The <em>Clarity Session</em></h3>
+      <p class="clarity-desc">
+        A 60-minute conversation for people who feel scattered, complex, or stuck between versions of themselves.
+        We find your thread — the one thing that connects everything you are — and figure out how to move from it.
+        No frameworks. No formulas. Just honest thinking, together.
+      </p>
+      <a href="mailto:em.karlitakarolina@gmail.com?subject=Clarity Session" class="btn btn-primary">
+        Book a Free Session
+      </a>
+    </div>
+  </section>
+
+  <section class="experience-section" id="experience">
+    <p class="section-label reveal">A little more of me</p>
+    <h2 class="section-title reveal">
+      Beyond the<br>
+      <em>resume.</em>
+    </h2>
+    <div class="life-narrative reveal">
+      <p>
+        I've been part of a community called <strong>TEQUILA</strong> — a dance group that started as
+        a place to move and became a place to belong. We don't just rehearse. We show up for each other,
+        we make things together, and somewhere between the music and the movement, we have a lot of fun.
+      </p>
+      <p>
+        Teaching has taken me across many different rooms — from kindergarten all the way to university level.
+        English, mostly. But what I've really been teaching, underneath all of it, is this:
+        <strong>that you are more capable than you think.</strong> Whether it's a five-year-old sounding out
+        their first words or a university student finding their voice before a crowd —
+        I show up for the ones trying to build their confidence and figure out their path.
+      </p>
+      <p>
+        I'll be honest — I am not a math person. At all. Some things just aren't for everyone,
+        and I've made my peace with that.
+      </p>
+      <p>
+        Outside of work, I fill my days the way most humans do: cooking something (sometimes it turns out well),
+        cleaning (it's meditative, truly), and slow hangouts with friends where the time just disappears.
+        Nothing complicated. Just good, quiet, real life.
+      </p>
+
+      <div class="about-belief" style="margin-top: 2rem;">
+        <p>
+          Despite the turbulent mind — and it is turbulent, often —
+          the only strategy that has ever actually worked is this:
+          just go with it. Find the thread. Keep moving.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tequila-section" id="tequila">
+    <p class="section-label reveal">Productions</p>
+    <h2 class="section-title reveal">
+      TEQUILA —<br>
+      <em>where I direct,<br>choreograph & produce.</em>
+    </h2>
+    <div class="tequila-intro reveal">
+      <p>
+        TEQUILA is my dance group — and the space where many of my worlds collide at once.
+        As <strong>choreographer, audio mixer, and director</strong>, every production is a full creative undertaking:
+        from the first concept to the final frame.
+      </p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal reveal-delay-1">
+        <p class="project-year">2024</p>
+        <h3 class="project-name">Project Title <em>One</em></h3>
+        <p class="project-desc">A brief description of this production — the concept, the feeling, what it was about. Replace this with the real story when you're ready.</p>
+        <div class="project-roles">
+          <span class="role-tag">Choreographer</span>
+          <span class="role-tag">Audio Mixing</span>
+          <span class="role-tag">Director</span>
+        </div>
+      </div>
+      <div class="project-card reveal reveal-delay-2">
+        <p class="project-year">2024</p>
+        <h3 class="project-name">Project Title <em>Two</em></h3>
+        <p class="project-desc">A brief description of this production — the concept, the feeling, what it was about. Replace this with the real story when you're ready.</p>
+        <div class="project-roles">
+          <span class="role-tag">Choreographer</span>
+          <span class="role-tag">Audio Mixing</span>
+          <span class="role-tag">Director</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mission">
+    <p class="mission-quote reveal">"That I simply, merely exist, is enough."</p>
+    <p class="mission-attr reveal">Karlita Karolina · @nengalitrolina</p>
+  </section>
+
+  <section class="alt" id="connect">
+    <div class="connect-inner">
+      <p class="section-label reveal">Find me</p>
+      <h2 class="section-title reveal">
+        Let's be in<br>
+        <em>each other's world.</em>
+      </h2>
+      <p class="reveal" style="font-size:0.9rem; color:var(--moonlight-dim); max-width:420px;">
+        Whether you want to collaborate, book a clarity session, or just say hi —
+        I'm genuinely happy to hear from you.
+      </p>
+      <div class="connect-links">
+        <a href="https://instagram.com/nengalitrolina" class="connect-item reveal reveal-delay-1" target="_blank">
+          <span class="connect-item-label">Instagram · @nengalitrolina</span>
+          <span class="connect-arrow">→</span>
+        </a>
+        <a href="https://tiktok.com/@nengalitrolina" class="connect-item reveal reveal-delay-2" target="_blank">
+          <span class="connect-item-label">TikTok · @nengalitrolina</span>
+          <span class="connect-arrow">→</span>
+        </a>
+        <a href="https://youtube.com/@Nengalitrolina" class="connect-item reveal reveal-delay-3" target="_blank">
+          <span class="connect-item-label">YouTube · @Nengalitrolina</span>
+          <span class="connect-arrow">→</span>
+        </a>
+        <a href="mailto:em.karlitakarolina@gmail.com" class="connect-item reveal">
+          <span class="connect-item-label">Email · em.karlitakarolina@gmail.com</span>
+          <span class="connect-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Karlita Karolina · All rights reserved</span>
+    <span>Built with intention · Bandung, Indonesia</span>
+  </footer>
+
+  <script>
+    document.body.classList.add('js-ready');
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    setTimeout(() => {
+      reveals.forEach(el => observer.observe(el));
+    }, 150);
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.style.color = '');
+          const activeLink = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (activeLink) activeLink.style.color = 'var(--moon)';
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach(s => sectionObserver.observe(s));
+  </script>
+
+</body>
+</html>
